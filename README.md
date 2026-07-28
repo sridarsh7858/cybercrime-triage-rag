@@ -1,13 +1,49 @@
+<div align="center">
+
+<img src="frontend/public/shield.svg" width="90" alt="Cybercrime Triage AI" />
+
 # Cybercrime Triage AI
 
-**An offline-first RAG system that triages Indian cybercrime complaints from text and screenshots — grounded in 300,000+ historical cases, running entirely on local hardware.**
+### Offline-first RAG that triages Indian cybercrime complaints from text *and* screenshots
 
-[![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![LangChain](https://img.shields.io/badge/LangChain-RAG-1C3C3C?logo=langchain&logoColor=white)](https://www.langchain.com/)
-[![ChromaDB](https://img.shields.io/badge/ChromaDB-Vector_Store-FF6B6B)](https://www.trychroma.com/)
-[![Ollama](https://img.shields.io/badge/Ollama-Llama_3.2-000000?logo=ollama&logoColor=white)](https://ollama.com/)
-[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+Grounded in **300,999 historical cases** · Runs entirely on local hardware · **Zero third-party API calls**
+
+<br/>
+
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)](https://www.langchain.com/)
+[![ChromaDB](https://img.shields.io/badge/ChromaDB-FF6B6B?style=for-the-badge&logoColor=white)](https://www.trychroma.com/)
+[![Ollama](https://img.shields.io/badge/Llama_3.2-000000?style=for-the-badge&logo=ollama&logoColor=white)](https://ollama.com/)
+[![React](https://img.shields.io/badge/React_18-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Tailwind](https://img.shields.io/badge/Tailwind_4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+
+<br/>
+
+**[Problem](#the-problem)** · **[Architecture](#architecture)** · **[Features](#features)** · **[Quickstart](#getting-started)** · **[API](#api-reference)** · **[Engineering notes](#engineering-notes)**
+
+</div>
+
+<!--
+  SCREENSHOTS — highest-impact addition to this README.
+  Drop images in docs/ and uncomment:
+
+<div align="center">
+  <img src="docs/dashboard.png" width="90%" alt="Triage dashboard" />
+  <br/><em>Complaint intake with drag-and-drop evidence upload, and the generated triage report</em>
+</div>
+-->
+
+<div align="center">
+<table>
+<tr>
+<td align="center" width="150"><h3>300,999</h3><sub>complaints indexed</sub></td>
+<td align="center" width="150"><h3>13</h3><sub>metadata fields<br/>per vector</sub></td>
+<td align="center" width="150"><h3>0</h3><sub>external API calls</sub></td>
+<td align="center" width="150"><h3>2</h3><sub>input modalities<br/>text + image</sub></td>
+</tr>
+</table>
+</div>
 
 ---
 
@@ -32,6 +68,32 @@ local LLM in those precedents to produce a structured triage report:
 
 Because retrieval is grounded in real prior complaints rather than the model's own
 parametric memory, the output reflects how comparable cases were actually categorised.
+
+<table>
+<tr><td>
+
+**In** — a complaint filed in plain language
+
+> *"Victim received a call from someone posing as a bank official asking to complete KYC. They shared an OTP and ₹48,000 was debited via UPI to an unknown account."*
+
+</td></tr>
+<tr><td>
+
+**Out** — a structured triage report, grounded in the 3 most similar historical cases
+
+> **1. Threat Classification**
+> Vishing (voice phishing) escalating to unauthorised UPI transfer via OTP compromise. Social-engineering vector: impersonation of a banking official under a KYC pretext.
+>
+> **2. Potential Legal / Regulatory Category**
+> Cheating by personation and identity theft under the IT Act; RBI unauthorised-electronic-transaction provisions apply to the liability window.
+>
+> **3. Actionable Mitigation Steps**
+> Report to 1930 / cybercrime.gov.in within the golden hour · request beneficiary-account freeze · file a written dispute with the issuing bank · preserve call records and the SMS debit alert.
+
+</td></tr>
+</table>
+
+<sub>Illustrative of the response shape. Actual wording is generated at request time from retrieved precedent.</sub>
 
 ### Why fully local matters here
 
@@ -68,7 +130,7 @@ React client.
 
 ## Features
 
-| | |
+| Capability | What it does |
 | --- | --- |
 | **Multimodal intake** | Accepts a text narrative, an evidence screenshot, or both. OCR output is concatenated into the retrieval query so text baked into an image is searchable. |
 | **Semantic retrieval over 300k cases** | ChromaDB similarity search returns the top 3 comparable complaints as grounding context. |
